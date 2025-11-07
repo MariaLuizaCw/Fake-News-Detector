@@ -70,4 +70,4 @@ dmypy.json
 *.out
 
 # Local settings
-local_settings.py
+local_settings.py.env
