@@ -4,8 +4,7 @@ import os
 from dotenv import load_dotenv
 import requests
 from urllib.parse import urlparse
-
-
+from ddgs import DDGS
 
 # 🔹 Classe base (interface)
 class SearchEngine:
@@ -58,4 +57,27 @@ class GoogleSearchEngine(SearchEngine):
                 "domain": domain
             })
 
+        return results
+    
+
+
+class DuckDuckGoSearchEngine(SearchEngine):
+    """DuckDuckGo search returning results in Google-like format."""
+    
+    def __init__(self):
+        self.ddgs = DDGS()
+
+    def search(self, query: str, num_results: int = 5):
+        results = []
+        for r in self.ddgs.text(query, max_results=num_results):
+            link = r.get("href") or r.get("url")
+            title = r.get("title") or ""
+            snippet = r.get("body") or title
+            domain = urlparse(link).netloc.replace("www.", "") if link else ""
+            results.append({
+                "title": title,
+                "snippet": snippet,
+                "link": link,
+                "domain": domain
+            })
         return results

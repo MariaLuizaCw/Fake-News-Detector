@@ -41,18 +41,29 @@ class LLM:
 
 def build_classification_prompt(title_to_check: str, results_filtered: list) -> str:
     """
-    Cria prompt 1-shot para classificar uma notícia como 'fake' ou 'true'.
+    Cria prompt 1-shot para classificar uma notícia como 'fake' ou 'true',
+    usando um exemplo de notícia verdadeira e um exemplo de notícia falsa.
     """
 
-    # 1-shot example
-    example = {
-        "title": "NASA announces new water discovery on Mars",
-        "results": [
-            {"title": "NASA confirms water on Mars", "domain": "nasa.gov", "credible": True},
-            {"title": "Scientists find traces of water on Mars", "domain": "science.org", "credible": True}
-        ],
-        "label": "true"
-    }
+    # 1-shot examples
+    examples = [
+        {
+            "title": "NASA announces new water discovery on Mars",
+            "results": [
+                {"title": "NASA confirms water on Mars", "domain": "nasa.gov", "credible": True},
+                {"title": "Scientists find traces of water on Mars", "domain": "science.org", "credible": True}
+            ],
+            "label": "true"
+        },
+        {
+            "title": "Celebrity endorses miracle cure for cancer",
+            "results": [
+                {"title": "Miracle cure claims debunked by doctors", "domain": "healthnews.com", "credible": True},
+                {"title": "Celebrity claims not verified", "domain": "gossipblog.com", "credible": False}
+            ],
+            "label": "fake"
+        }
+    ]
 
     # Convert results_filtered into simple JSON string
     filtered_json = "\n".join([str(r) for r in results_filtered])
@@ -60,11 +71,17 @@ def build_classification_prompt(title_to_check: str, results_filtered: list) -> 
     prompt = f"""
         You are an assistant for fake news detection. Classify the news headline as 'fake' or 'true'.
 
-        Example:
-        Headline: {example['title']}
+        Example 1:
+        Headline: {examples[0]['title']}
         Results:
-        {example['results']}
-        Answer: {example['label']}
+        {examples[0]['results']}
+        Answer: {examples[0]['label']}
+
+        Example 2:
+        Headline: {examples[1]['title']}
+        Results:
+        {examples[1]['results']}
+        Answer: {examples[1]['label']}
 
         Now classify the following headline:
         Headline: {title_to_check}
@@ -72,5 +89,5 @@ def build_classification_prompt(title_to_check: str, results_filtered: list) -> 
         {filtered_json}
 
         Answer only 'fake' or 'true'. No explanations.
-        """
+    """
     return prompt

@@ -1,0 +1,31 @@
+
+        You are an assistant for fake news detection. Classify the news headline as 'fake' or 'true'.
+
+        Example 1:
+        Headline: NASA announces new water discovery on Mars
+        Results:
+        [{'title': 'NASA confirms water on Mars', 'domain': 'nasa.gov', 'credible': True}, {'title': 'Scientists find traces of water on Mars', 'domain': 'science.org', 'credible': True}]
+        Answer: true
+
+        Example 2:
+        Headline: Celebrity endorses miracle cure for cancer
+        Results:
+        [{'title': 'Miracle cure claims debunked by doctors', 'domain': 'healthnews.com', 'credible': True}, {'title': 'Celebrity claims not verified', 'domain': 'gossipblog.com', 'credible': False}]
+        Answer: fake
+
+        Now classify the following headline:
+        Headline: Venezuela Maduro warns of repeat elections in states won by opposition
+        Results:
+        {'title': '2024 Venezuelan presidential election - Wikipedia', 'snippet': 'Presidential elections were held in Venezuela on 28 July 2024 to choose a president for a six-year term beginning on 10 January 2025. The election was contentious, with international monitors calling it neither free nor fair...', 'link': 'https://en.wikipedia.org/wiki/2024_Venezuelan_presidential_election', 'domain': 'en.wikipedia.org', 'similarity': 0.9150375127792358, 'credible': False}
+{'title': "Venezuela's ruling party wins by landslide in elections ...", 'snippet': "May 26, 2025 · Venezuelan President Nicolas Maduro ' s party on Sunday swept the board in parliamentary and regional elections that were largely boycotted by the opposition in protest over his disputed...", 'link': 'https://www.france24.com/en/americas/20250526-venezuela-s-ruling-party-wins-landslide-in-elections-boycotted-by-opposition', 'domain': 'france24.com', 'similarity': 0.9198595881462097, 'credible': False}
+{'title': 'Maduro triumphs in Venezuelan election boycotted by opposition', 'snippet': 'May 26, 2025 · Venezuelan President Nicolas Maduro ’ s governing party has swept parliamentary and regional elections that were boycotted by the opposition .', 'link': 'https://www.aljazeera.com/news/2025/5/26/maduro-triumphs-in-venezuelan-election-boycotted-by-opposition', 'domain': 'aljazeera.com', 'similarity': 0.9463270902633667, 'credible': True}
+{'title': "Venezuela's ruling party claims election win as opposition ...", 'snippet': 'May 26, 2025 · Venezuela \'s ruling party is celebrating what it has described as "an overwhelming victory" in regional and parliamentary elections , which were boycotted by the majority of opposition parties.', 'link': 'https://www.bbc.com/news/articles/cdj9znklprlo', 'domain': 'bbc.com', 'similarity': 0.9382697939872742, 'credible': True}
+{'title': "Venezuela's opposition faces setback after countries suggest ...", 'snippet': 'Venezuela ’ s opposition has been dealt a blow as countries that had been pressuring President Nicolás Maduro to release vote tallies backing his claim to victory in last month’s presidential election are now suggesting the possibility of repeating the contest.', 'link': 'https://apnews.com/article/brazil-lula-venezuela-election-maduro-1c3afbf01f4c85e7903c2fc3d7fdbf38', 'domain': 'apnews.com', 'similarity': 0.9349889159202576, 'credible': True}
+{'title': 'The Maduro Regime Held Another Sham Election—What ... - CSIS', 'snippet': 'May 27, 2025 · On May 25, Venezuela held regional and parliamentary elections . Amid an environment of political repression, piddling voter turnout, and a boycott by the mainstream opposition , the regime claimed a handy victory with more than 80 percent of the vote.', 'link': 'https://www.csis.org/analysis/maduro-regime-held-another-sham-election-what-happens-now', 'domain': 'csis.org', 'similarity': 0.9165096282958984, 'credible': False}
+{'title': "Venezuela's Maduro Warns of Repeat Elections in States Won by ...", 'snippet': 'His warning came in a televised speech after the government on Sunday unexpectedly won 18 of 23 states in a vote which the opposition calls fraudulent.', 'link': 'https://thewire.in/uncategorised/state-elections-in-venezuela-may-be-repeated-in-the-five-states-won-by-the-opposition', 'domain': 'thewire.in', 'similarity': 0.9518420100212097, 'credible': False}
+{'title': 'Venezuela’s Government Claims Victory in Polls Boycotted by ...', 'snippet': 'May 26, 2025 · Venezuela ’ s electoral council, stacked with officials loyal to the autocrat Nicolás Maduro , claimed late Sunday night that his party had won an overwhelming victory in regional and...', 'link': 'https://www.nytimes.com/2025/05/26/world/americas/venezuela-maduro-regional-election.html', 'domain': 'nytimes.com', 'similarity': 0.9400289058685303, 'credible': True}
+{'title': 'Venezuela Maduro warns of repeat elections in states won by ...', 'snippet': 'Venezuelan state elections may be repeated in the five states won by the opposition if the governors- elect continue to refuse to be sworn in by a controversial pro-government legislative superbody, President Nicolas Maduro warned on Friday.', 'link': 'https://www.reuters.com/article/world/venezuela-maduro-warns-of-repeat-elections-in-states-won-by-opposition-idUSKBN1CP2UJ/', 'domain': 'reuters.com', 'similarity': 0.9700870513916016, 'credible': True}
+{'title': 'Maduro warns of repeating elections in states won by opposition', 'snippet': 'Venezuelan President Nicolas Maduro has warned that elections may be repeated in the states won by the opposition if the elected governors refuse to be sworn in before the newly-formed constituent assembly.', 'link': 'https://www.syriatruths.com/maduro-warns-of-repeating-elections-in-states-won-by-opposition/', 'domain': 'syriatruths.com', 'similarity': 0.9800172448158264, 'credible': False}
+
+        Answer only 'fake' or 'true'. No explanations.
+    
