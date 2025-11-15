@@ -17,7 +17,7 @@ def prefilter_results(
     credible_domains = load_credible_domains(credible_domains_file)
     
     # Embeddings
-    titles = [r["title"] for r in results]
+    titles = [r["refined_title"] for r in results]
     embeddings = embedder.encode(titles)
     original_emb = embedder.encode([original_title])
 
