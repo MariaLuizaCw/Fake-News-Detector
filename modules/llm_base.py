@@ -60,11 +60,11 @@ class LOCAL_LLM:
             "stream": False
         }
 
-        resp = requests.post(self.endpoint, headers=self.headers, json=payload, timeout=60, verify=False)
+        resp = requests.post(self.endpoint, json=payload, timeout=60, verify=False)
         resp.raise_for_status()
         
         result = resp.json()
-        resposta["message"]["content"].strip()
+        return result["message"]["content"].strip()
 
 
 def build_classification_prompt(title_to_check: str, results_filtered: list) -> str:
