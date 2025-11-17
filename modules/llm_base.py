@@ -38,6 +38,34 @@ class LLM:
         return result["choices"][0]["message"]["content"].strip()
 
 
+class LOCAL_LLM:
+    """Classe base simples para chamadas a LLMs localmente."""
+
+    def __init__(self, model: str, endpoint: str = "http://localhost:11434/api/chat"):
+        self.model = model        
+        self.endpoint = endpoint
+
+    def generate(self, prompt: str, temperature: float = 0.0) -> str:
+        """Gera texto a partir de um prompt, ignorando SSL."""
+
+        messages = [
+            {"role": "system", "content": "You are a multipurpose assistant."},
+            {"role": "user", "content": prompt}
+        ]
+
+        payload = {
+            "model": self.model,
+            "messages": messages,
+            "temperature": temperature,
+            "stream": False
+        }
+
+        resp = requests.post(self.endpoint, json=payload, timeout=60, verify=False)
+        resp.raise_for_status()
+        
+        result = resp.json()
+        return result["message"]["content"].strip()
+
 
 def build_classification_prompt(title_to_check: str, results_filtered: list) -> str:
     """
