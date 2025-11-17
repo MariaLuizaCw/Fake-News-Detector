@@ -38,6 +38,7 @@ class LLM:
         return result["choices"][0]["message"]["content"].strip()
 
 
+## Pessoal essa classe faz a mesma coisa q a de cima, depois vejam se precisa ficar!!
 class LOCAL_LLM:
     """Classe base simples para chamadas a LLMs localmente."""
 

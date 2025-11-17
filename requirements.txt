@@ -32,3 +32,4 @@ tqdm
 filelock
 typing_extensions
 Jinja2
+newspaper3k
