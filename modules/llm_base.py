@@ -2,6 +2,7 @@
 import os
 import requests
 from typing import List, Dict
+import re
 
 
 class LLM:
@@ -42,7 +43,7 @@ class LLM:
 class LOCAL_LLM:
     """Classe base simples para chamadas a LLMs localmente."""
 
-    def __init__(self, model: str, endpoint: str = "http://localhost:11434/api/chat"):
+    def __init__(self, model: str, endpoint: str = "http://localhost:11434/api/chat/"):
         self.model = model        
         self.endpoint = endpoint
 
@@ -65,7 +66,10 @@ class LOCAL_LLM:
         resp.raise_for_status()
         
         result = resp.json()
-        return result["message"]["content"].strip()
+        result = result["message"]["content"].strip()
+        result = re.sub(r"""['"“”‘’‹›«»‛‟❛❜❝❞⹂]""", "", result)
+        print (result)
+        return result
 
 
 def build_classification_prompt(title_to_check: str, results_filtered: list) -> str:
