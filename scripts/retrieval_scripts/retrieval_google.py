@@ -3,8 +3,23 @@ import psycopg2
 import sys
 import os
 import argparse
+import json
+import http.client
+from urllib.parse import urlparse
 from datetime import datetime
+from dotenv import load_dotenv
 
+# Carrega variáveis do .env
+load_dotenv()
+# -------------------------------
+# 0️⃣ Carregar .env externo
+# -------------------------------
+ENV_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.env'))
+load_dotenv(ENV_PATH)
+API_KEY = os.getenv("GOOGLE_API_KEY")
+if not API_KEY:
+    print("[ERRO] GOOGLE_API_KEY não encontrada no .env")
+    sys.exit(1)
 
 # -------------------------------
 # 1️⃣ Receber parâmetros
@@ -17,40 +32,33 @@ start_id = args.start_id
 end_id = args.end_id
 
 # -------------------------------
-# 2️⃣ Adicionar modules ao sys.path
+# 2️⃣ Configurar diretórios
 # -------------------------------
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
+DATA_DIR = os.path.join(BASE_DIR, '..', '..', 'data')
+MODULES_DIR = os.path.join(BASE_DIR, '..', '..', 'modules')
+OUTPUT_DIR = os.path.join(BASE_DIR, '..', '..', 'out')
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # pasta scripts/
-DATA_DIR = os.path.join(BASE_DIR, '..', 'data')
-MODULES_DIR = os.path.join(BASE_DIR, '..', 'modules')
-OUTPUT_DIR = os.path.join(BASE_DIR, '..', 'out')
 
-
-# Adicionar modules ao sys.path para poder importar
+# Adicionar modules ao sys.path
 sys.path.append(MODULES_DIR)
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'modules')))
-from search_engines import DuckDuckGoSearchEngine, TitleRefiner
-from embedder import HuggingFaceEmbedder
-
+from search_engines import GoogleSearchEngine, TitleRefiner
+from embedder import HuggingFaceEmbedder 
 
 # -------------------------------
 # 3️⃣ Carregar CSVs
 # -------------------------------
-fake_csv_path = os.path.join(DATA_DIR, 'Fake.csv')
-true_csv_path = os.path.join(DATA_DIR, 'True.csv')
-fake_df = pd.read_csv(fake_csv_path)
-true_df = pd.read_csv(true_csv_path)
+fake_df = pd.read_csv(os.path.join(DATA_DIR, 'Fake.csv'))
+true_df = pd.read_csv(os.path.join(DATA_DIR, 'True.csv'))
 fake_df['class'] = 'fake'
 true_df['class'] = 'true'
-df = pd.concat([fake_df, true_df], axis=0)
-df = df.drop_duplicates(subset='title')
+df = pd.concat([fake_df, true_df], axis=0).drop_duplicates(subset='title')
 
 # -------------------------------
 # 4️⃣ Shuffle fixo e criar shuffle_id
 # -------------------------------
 df_shuffled = df.sample(frac=1, random_state=42).reset_index(drop=True)
-df_shuffled['shuffle_id'] = df_shuffled.index  # índice do shuffle fixo
+df_shuffled['shuffle_id'] = df_shuffled.index
 
 # -------------------------------
 # 5️⃣ Selecionar intervalo
@@ -61,24 +69,25 @@ sample_df = df_shuffled[(df_shuffled['shuffle_id'] >= start_id) & (df_shuffled['
 print(f"[INFO] Processando {len(sample_df)} títulos (shuffle_id {start_id} -> {end_id})")
 
 # -------------------------------
-# 6️⃣ Configurar TitleRefiner e SearchEngine
+# 6️⃣ Inicializar SearchEngine
 # -------------------------------
+
 title_refiner = TitleRefiner(
     embedder=HuggingFaceEmbedder(model_name="sentence-transformers/all-MiniLM-L6-v2"),
     similarity_threshold=0.85
 )
-search_engine = DuckDuckGoSearchEngine(title_refiner)
+search_engine = GoogleSearchEngine(api_key=API_KEY, title_refiner=title_refiner)
 
 # -------------------------------
 # 7️⃣ Conectar ao Postgres
 # -------------------------------
 try:
     conn = psycopg2.connect(
-        host="127.0.0.1",
-        port=5436,
-        dbname="database",
-        user="postgres",
-        password="postgres"
+        host=os.getenv("POSTGRES_HOST"),
+        port=int(os.getenv("POSTGRES_PORT")),
+        dbname=os.getenv("POSTGRES_DB"),
+        user=os.getenv("POSTGRES_USER"),
+        password=os.getenv("POSTGRES_PASSWORD")
     )
     cur = conn.cursor()
     print("[INFO] Conexão com Postgres realizada com sucesso")
@@ -99,6 +108,7 @@ for idx, row in sample_df.iterrows():
     title_1 = row['title']
     shuffle_id = row['shuffle_id']
     print(f"[INFO] Processando shuffle_id {shuffle_id}: {title_1[:60]}...")
+
     try:
         results = search_engine.search(title_1, num_results=10)
     except Exception as e:
@@ -119,11 +129,11 @@ for idx, row in sample_df.iterrows():
         for r in results
     ]
 
-    # Inserção em batch
+
     if records_to_insert:
         try:
-            cur.executemany("""
-                INSERT INTO retrieved_news_ddgo (
+            INSERT_QUERY = """
+                INSERT INTO retrieved_news_google (
                     search_title,
                     original_title,
                     refined_title,
@@ -133,7 +143,11 @@ for idx, row in sample_df.iterrows():
                     shuffle_id
                 )
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """, records_to_insert)
+            """
+
+            # Supondo que records_to_insert agora contenha também refined_title
+            # Cada tupla: (search_title, original_title, refined_title, snippet, link, domain, shuffle_id)
+            cur.executemany(INSERT_QUERY, records_to_insert)
             conn.commit()
             success_count += len(records_to_insert)
             print(f"[INFO] Inseridos {len(records_to_insert)} registros para shuffle_id {shuffle_id}")
@@ -144,6 +158,7 @@ for idx, row in sample_df.iterrows():
     else:
         print(f"[AVISO] Nenhum resultado para inserir para shuffle_id {shuffle_id}")
         failed_titles.append({'title': title_1, 'shuffle_id': shuffle_id, 'reason': 'Nenhum resultado inserido'})
+
 # -------------------------------
 # 10️⃣ Fechar conexão
 # -------------------------------
@@ -157,7 +172,8 @@ print("[INFO] Script finalizado com sucesso")
 if failed_titles:
     report_df = pd.DataFrame(failed_titles)
     now_str = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_path = os.path.join(OUTPUT_DIR, 'failed_titles_report_{now_str}.csv')
+    report_path = os.path.join(OUTPUT_DIR, f'failed_titles_report_{now_str}.csv')
+    report_df.to_csv(report_path, index=False)
     print(f"[INFO] Relatório de falhas salvo em: {report_path}")
 
 print(f"[RESUMO] Títulos processados com sucesso: {success_count}")

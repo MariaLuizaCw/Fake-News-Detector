@@ -1,0 +1,13 @@
+Classify the news headline as 'fake' or 'real'.
+
+Examples:
+Headline: NASA announces new water discovery on Mars
+Answer: real
+
+Headline: Celebrity endorses miracle cure for cancer
+Answer: fake
+
+Now classify the following headline:
+Headline: Flash floods kill five in Malaysia, army deploys to rescue thousands of displaced
+
+Answer only 'fake' or 'real'. Do not explain.

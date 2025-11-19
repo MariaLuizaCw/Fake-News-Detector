@@ -6,3 +6,7 @@ def load_credible_domains(file_path: str) -> List[str]:
     with open(file_path, "r", encoding="utf-8") as f:
         domains = [line.strip() for line in f if line.strip()]
     return domains
+
+
+def estimate_tokens(text: str) -> int:
+    return int(len(text) / 4)

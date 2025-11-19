@@ -3,21 +3,8 @@ import psycopg2
 import sys
 import os
 import argparse
-import json
-import http.client
-from urllib.parse import urlparse
 from datetime import datetime
-from dotenv import load_dotenv
 
-# -------------------------------
-# 0️⃣ Carregar .env externo
-# -------------------------------
-ENV_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.env'))
-load_dotenv(ENV_PATH)
-API_KEY = os.getenv("GOOGLE_API_KEY")
-if not API_KEY:
-    print("[ERRO] GOOGLE_API_KEY não encontrada no .env")
-    sys.exit(1)
 
 # -------------------------------
 # 1️⃣ Receber parâmetros
@@ -30,31 +17,39 @@ start_id = args.start_id
 end_id = args.end_id
 
 # -------------------------------
-# 2️⃣ Configurar diretórios
+# 2️⃣ Adicionar modules ao sys.path
 # -------------------------------
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = os.path.join(BASE_DIR, '..', 'data')
-MODULES_DIR = os.path.join(BASE_DIR, '..', 'modules')
-OUTPUT_DIR = os.path.join(BASE_DIR, '..', 'out')
 
-# Adicionar modules ao sys.path
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
+DATA_DIR = os.path.join(BASE_DIR, '..', '..', 'data')
+MODULES_DIR = os.path.join(BASE_DIR, '..', '..', 'modules')
+OUTPUT_DIR = os.path.join(BASE_DIR, '..', '..', 'out')
+
+# Adicionar modules ao sys.path para poder importar
 sys.path.append(MODULES_DIR)
-from search_engines import GoogleSearchEngine  # assumindo que a classe está em modules/google_search.py
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'modules')))
+from search_engines import DuckDuckGoSearchEngine, TitleRefiner
+from embedder import HuggingFaceEmbedder
+
 
 # -------------------------------
 # 3️⃣ Carregar CSVs
 # -------------------------------
-fake_df = pd.read_csv(os.path.join(DATA_DIR, 'Fake.csv'))
-true_df = pd.read_csv(os.path.join(DATA_DIR, 'True.csv'))
+fake_csv_path = os.path.join(DATA_DIR, 'Fake.csv')
+true_csv_path = os.path.join(DATA_DIR, 'True.csv')
+fake_df = pd.read_csv(fake_csv_path)
+true_df = pd.read_csv(true_csv_path)
 fake_df['class'] = 'fake'
 true_df['class'] = 'true'
-df = pd.concat([fake_df, true_df], axis=0).drop_duplicates(subset='title')
+df = pd.concat([fake_df, true_df], axis=0)
+df = df.drop_duplicates(subset='title')
 
 # -------------------------------
 # 4️⃣ Shuffle fixo e criar shuffle_id
 # -------------------------------
 df_shuffled = df.sample(frac=1, random_state=42).reset_index(drop=True)
-df_shuffled['shuffle_id'] = df_shuffled.index
+df_shuffled['shuffle_id'] = df_shuffled.index  # índice do shuffle fixo
 
 # -------------------------------
 # 5️⃣ Selecionar intervalo
@@ -65,9 +60,13 @@ sample_df = df_shuffled[(df_shuffled['shuffle_id'] >= start_id) & (df_shuffled['
 print(f"[INFO] Processando {len(sample_df)} títulos (shuffle_id {start_id} -> {end_id})")
 
 # -------------------------------
-# 6️⃣ Inicializar SearchEngine
+# 6️⃣ Configurar TitleRefiner e SearchEngine
 # -------------------------------
-search_engine = GoogleSearchEngine(api_key=API_KEY)
+title_refiner = TitleRefiner(
+    embedder=HuggingFaceEmbedder(model_name="sentence-transformers/all-MiniLM-L6-v2"),
+    similarity_threshold=0.85
+)
+search_engine = DuckDuckGoSearchEngine(title_refiner)
 
 # -------------------------------
 # 7️⃣ Conectar ao Postgres
@@ -99,7 +98,6 @@ for idx, row in sample_df.iterrows():
     title_1 = row['title']
     shuffle_id = row['shuffle_id']
     print(f"[INFO] Processando shuffle_id {shuffle_id}: {title_1[:60]}...")
-
     try:
         results = search_engine.search(title_1, num_results=10)
     except Exception as e:
@@ -111,26 +109,29 @@ for idx, row in sample_df.iterrows():
         (
             title_1,
             r.get('title'),
+            r.get('refined_title'),
             r.get('snippet'),
             r.get('link'),
             r.get('domain'),
-            shuffle_id
+            shuffle_id  # novo campo
         )
         for r in results
     ]
 
+    # Inserção em batch
     if records_to_insert:
         try:
             cur.executemany("""
-                INSERT INTO retrieved_news_google (
+                INSERT INTO retrieved_news_ddgo (
                     search_title,
                     original_title,
+                    refined_title,
                     snippet,
                     link,
                     domain,
                     shuffle_id
                 )
-                VALUES (%s, %s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
             """, records_to_insert)
             conn.commit()
             success_count += len(records_to_insert)
@@ -142,7 +143,6 @@ for idx, row in sample_df.iterrows():
     else:
         print(f"[AVISO] Nenhum resultado para inserir para shuffle_id {shuffle_id}")
         failed_titles.append({'title': title_1, 'shuffle_id': shuffle_id, 'reason': 'Nenhum resultado inserido'})
-
 # -------------------------------
 # 10️⃣ Fechar conexão
 # -------------------------------
@@ -156,8 +156,7 @@ print("[INFO] Script finalizado com sucesso")
 if failed_titles:
     report_df = pd.DataFrame(failed_titles)
     now_str = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_path = os.path.join(OUTPUT_DIR, f'failed_titles_report_{now_str}.csv')
-    report_df.to_csv(report_path, index=False)
+    report_path = os.path.join(OUTPUT_DIR, 'failed_titles_report_{now_str}.csv')
     print(f"[INFO] Relatório de falhas salvo em: {report_path}")
 
 print(f"[RESUMO] Títulos processados com sucesso: {success_count}")

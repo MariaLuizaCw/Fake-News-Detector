@@ -1,6 +1,6 @@
 from typing import List, Dict
 from sklearn.metrics.pairwise import cosine_similarity
-from .help import load_credible_domains  # se você também modularizar o carregamento de domínios
+from help import load_credible_domains  # se você também modularizar o carregamento de domínios
 
 
 def prefilter_results(

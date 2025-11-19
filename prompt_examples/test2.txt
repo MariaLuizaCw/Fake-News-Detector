@@ -1,0 +1,31 @@
+
+Classify the news headline as 'fake', 'real' or 'real with misinformation'.
+
+Examples (each line shows refined_title | original_title | domain | credibility):
+
+Headline: NASA announces new water discovery on Mars
+- NASA confirms water on Mars after new satellite analysis | NASA confirms water on Mars... | nasa.gov | credible
+- Scientists find traces of water on Mars beneath the surface | Scientists find traces of water on Mars... | science.org | credible
+Answer: real
+
+Headline: Celebrity endorses miracle cure for cancer
+- Miracle cure claims debunked by doctors | Miracle cure claims debunked by doctors | healthnews.com | credible
+- Celebrity claims not verified | Celebrity claims not verified | gossipblog.com | credibility unknown
+Answer: fake
+
+Headline: Study proves that coffee doubles lifespan
+- Coffee linked to longer lifespan according to observational study — association is small and not causal | Coffee linked to longer lifespan according to observational study... | nytimes.com | credible
+- Experts warn study shows correlation, not causation | Experts warn study shows correlation, not causation | reuters.com | credible
+Answer: real with misinformation
+
+Now classify the following headline:
+Headline: HYSTERICAL! President Trump Calls Out Obama: “Honestly, they didn’t know what the hell they were doing.” [Video]
+
+Results from web search (each line shows refined_title | original_title | domain | credibility):
+- Obama Gets Slammed After Calling President Trump a | Obama Gets Slammed After Calling President Trump a | trumptrainnews.com | credibility unknown
+- obama | Empire Of Truth | obama | Empire Of Truth | empireoftruth.com | credibility unknown
+- Barack Hussein Obama – Bullshit News | Barack Hussein Obama – Bullshit News | bullshitnews.org | credibility unknown
+- President Obama | decacsinc | President Obama | decacsinc | decacs-inc.com | credibility unknown
+
+Answer only one of the following: 'fake', 'true', 'real with misinformation'. Do not explain.
+    
