@@ -1,0 +1,23 @@
+
+Classify the news headline as 'fake' or 'real'.
+
+Examples (each line shows refined_title | snippet | domain | credibility):
+
+Headline: Fossil fuel companies accused of “greenwashing” environmental commitment
+- Oil firms' climate claims are greenwashing, study concludes | Accusations of greenwashing against major oil companies that claim to be in transition to clean energy are well-founded, according to the most comprehensive ... | theguardian.com | credible
+- Revealed: 9 examples of fossil fuel company greenwashing | We've launched the Greenwashing Files to highlight how advertising and other public claims from companies don't always match up to reality. | clientearth.org | credibility unknown
+Answer: real
+
+Headline: Pope Francis endorses Donald Trump for president
+- Fake News | His comments come amid warnings of a 'fake news' crisis in online media following last month's US elections. Pope Francis Shocks World, Endorses. Donald Trump ... | theguardian.com | credibility unknown
+- Read all about it: The biggest fake news stories of 2016 | But while the Brexit vote and the U.S. election were making headlines, so too were apparently genuine stories that Pope Francis had endorsed ... | cnbc.com | credible
+Answer: fake
+
+Now classify the following headline:
+Headline:  Ivanka Defends Malia Obama From Attacks, Her Dad’s Fans Won’t Stop: ‘She Looks Like A Baboon’
+
+Results from web search (each line shows refined_title | snippet | domain | credibility):
+
+
+Answer only 'fake' or 'real'. Do not explain.
+    

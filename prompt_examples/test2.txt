@@ -19,12 +19,12 @@ Headline: Eating chocolate can help you lose weight
 Answer: real with misinformation
 
 Now classify the following headline:
-Headline:  REPORT: Trump Laughed After Woman Was Grabbed ‘By The P*ssy’ On Apprentice Set
+Headline:  DOZENS Of GOP Foreign Policy Experts Pledge To Stop Trump From Winning Nomination
 
 Results from web search (each line shows refined_title | snippet | domain | credibility):
-- Oct 17 - REPORT: Trump Laughed After Woman Was Grabbed ‘By ... | Oct 18, 2016 · Oscar nominee Gary Busey allegedly s3xually assaulted a female Apprentice employee during his time on the show, five Apprentice employees tell The Daily Beast. Donald Trump knew about the incident, laughed it off, and kept Busey on his TV series, these staffers said. | boxden.com | credibility unknown
-- Possibly Inspired By Trump's 'Grab Them By The P*ssy' Quote, A Republican Has Grabbed A Woman's Crotch | Jan 17, 2017 · This is what Donald Trump , set to be US President in 2 days, told a TV show host about women . He passed it off as "locker room banter", but a member of his party may have taken it as advice. | indiatimes.com | credibility unknown
-- Melania Trump 'laughed over Donald's "grab em by the p*ssy" tape' | Melania Trump is said to have burst out laughing when asked about an infamous leaked tape of her husband hours after it emerged (Pictures: AP). Melania Trump guffawed when asked about a leaked audio recording of her husband advising a pal to grab women ‘ by the pussy... | metro.co.uk | credibility unknown
+- Despite legal woes, Trump trounces rivals for GOP nomination in | Trump is also facing dozens of felony charges in a case involving hush money payments to a porn star in New York and is bracing for indictment in ... | timesofisrael.com | credibility unknown
+- 2024 Election Latest: Trump accepts his GOP nomination on the | ... of his speech, Trump launched into his regular riff on Biden’s border policy and then stopped, realizing he was directing the audience’s attention ... | srnnews.com | credibility unknown
+- Clinton, Trump Have Wide Paths to Nominations | One year ago, however, some of the same savants and high rollers picked Jeb Bush to top the GOP field. ... from several key Democratic Party ... | thursdayreview.com | credibility unknown
 
 Answer only one of the following: 'fake', 'true', 'real with misinformation'. Do not explain.
     

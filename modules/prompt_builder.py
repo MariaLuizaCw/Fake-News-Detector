@@ -57,10 +57,13 @@ def build_classification_prompt_test1(title_to_check: str, results_filtered: lis
 
     examples_text = "\n\n".join([format_example(e) for e in examples])
 
-    # Formatar resultados filtrados do título atual
+
+
     filtered_text = "\n".join([
-        f"- {r.get('refined_title')} | {r.get('snippet')} | {r.get('domain')} | {'credible source' if r['credible'] else 'credibility unknown'}"
+        f"- {r['refined_title']} | {r['snippet']} | {r['domain']} | "
+        f"{'credible source' if r.get('credible') else 'credibility unknown'}"
         for r in results_filtered
+        if r.get('refined_title') and r.get('snippet') and r.get('domain')
     ])
 
     prompt = f"""
