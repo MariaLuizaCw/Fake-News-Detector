@@ -64,3 +64,5 @@ fortune.com
 hbr.org
 houstonchronicle.com
 jacobinmag.com
+nasa.gov
+factcheck.afp.com

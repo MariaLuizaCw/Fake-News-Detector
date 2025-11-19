@@ -73,11 +73,11 @@ search_engine = DuckDuckGoSearchEngine(title_refiner)
 # -------------------------------
 try:
     conn = psycopg2.connect(
-        host="127.0.0.1",
-        port=5436,
-        dbname="database",
-        user="postgres",
-        password="postgres"
+        host=os.getenv("POSTGRES_HOST"),
+        port=int(os.getenv("POSTGRES_PORT")),
+        dbname=os.getenv("POSTGRES_DB"),
+        user=os.getenv("POSTGRES_USER"),
+        password=os.getenv("POSTGRES_PASSWORD")
     )
     cur = conn.cursor()
     print("[INFO] Conexão com Postgres realizada com sucesso")

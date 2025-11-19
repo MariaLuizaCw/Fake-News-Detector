@@ -1,26 +1,32 @@
 
 Classify the news headline as 'fake' or 'real'.
 
-Examples (each line shows refined_title | original_title | domain | credibility):
+Examples (each line shows refined_title | snippet | domain | credibility):
 
-Headline: NASA announces new water discovery on Mars
-- NASA confirms water on Mars after new satellite analysis | NASA confirms water on Mars... | nasa.gov | credible
-- Scientists find traces of water on Mars beneath the surface | Scientists find traces of water on Mars... | science.org | credible
+Headline: Fossil fuel companies accused of “greenwashing” environmental commitment
+- Oil firms' climate claims are greenwashing, study concludes | Accusations of greenwashing against major oil companies that claim to be in transition to clean energy are well-founded, according to the most comprehensive ... | theguardian.com | credible
+- Revealed: 9 examples of fossil fuel company greenwashing | We've launched the Greenwashing Files to highlight how advertising and other public claims from companies don't always match up to reality. | clientearth.org | credibility unknown
 Answer: real
 
-Headline: Celebrity endorses miracle cure for cancer
-- Miracle cure claims debunked by doctors | Miracle cure claims debunked by doctors | healthnews.com | credible
-- Celebrity claims not verified | Celebrity claims not verified | gossipblog.com | credibility unknown
+Headline: Pope Francis endorses Donald Trump for president
+- Fake News | His comments come amid warnings of a 'fake news' crisis in online media following last month's US elections. Pope Francis Shocks World, Endorses. Donald Trump ... | theguardian.com | credibility unknown
+- Read all about it: The biggest fake news stories of 2016 | But while the Brexit vote and the U.S. election were making headlines, so too were apparently genuine stories that Pope Francis had endorsed ... | cnbc.com | credible
 Answer: fake
 
 Now classify the following headline:
-Headline: HYSTERICAL! President Trump Calls Out Obama: “Honestly, they didn’t know what the hell they were doing.” [Video]
+Headline: Republican makes first move to work with Democrats on healthcare
 
-Results from web search (each line shows refined_title | original_title | domain | credibility):
-- Obama Gets Slammed After Calling President Trump a | Obama Gets Slammed After Calling President Trump a | trumptrainnews.com | credibility unknown
-- obama | Empire Of Truth | obama | Empire Of Truth | empireoftruth.com | credibility unknown
-- Barack Hussein Obama – Bullshit News | Barack Hussein Obama – Bullshit News | bullshitnews.org | credibility unknown
-- President Obama | decacsinc | President Obama | decacsinc | decacs-inc.com | credibility unknown
+Results from web search (each line shows refined_title | snippet | domain | credibility):
+- Republican makes first move to work with Democrats on healthcare | By Susan Cornwell WASHINGTON (Reuters) - U.S. Senator Lamar Alexander on Tuesday made the first move by a senior Republican to work with Democrats on repairing Obamacare after his party failed to repeal and replace the healthcare law... | yahoo.com | credibility unknown
+- Trump offers to work with Democrats on healthcare but demands government reopen first | Republicans have accused Democrats of stalling because they want to extend healthcare access to illegal immigrants , while the GOP's short-term "clean" continuing resolution is designed to keep the government running without changing existing policies. | abcnews4.com | credibility unknown
+- Kasich: Trump needs to work with Democrats on health care | After Republican leaders pulled their health care bill on Friday, Ohio Gov. John Kasich said he thinks President Donald Trump could move to work with Democrats on compromise legislation. | wlwt.com | credibility unknown
+- Trump Seeks to Negotiate with Democrats on Healthcare to End... | "If President Trump and Republicans are finally ready to sit down and do something about health care for American families, Democrats will be there—and ready to make it happen." | frecine.com | credibility unknown
+- Trump says he'll work with Democrats on healthcare after latest embarrassing defeat | Donald Trump has said he intends to work with Democrats on healthcare , hours after he called for the Senate’s Republican leadership to get rid of the filibuster rule that encourages bipartisanship. | independent.co.uk | credibility unknown
+- Paul Ryan doesn’t want to work with Democrats on health care . | Vox | Republicans have two ways to move forward on health care reform, and House Speaker Paul Ryan and President Donald Trump can’t seem to agree on which one to go with. Ryan shot down Trump’s idea of working with Democrats to push through health care reform in an interview with... | vox.com | credible source
+- Trump Might Work With Democrats On Healthcare, But There's Still One Problem | Trump Might Include Democrats In On A New Healthcare Bill.But according to the Financial Times, the president still wants to pass some manner of healthcare reform — and if House Republicans can't agree on a bill, Trump might work with Democrats on healthcare . | bustle.com | credibility unknown
+- Lead Dem healthcare negotiatior also talking to key Republican | A lead Democratic healthcare negotiator has been keeping a back channel open to a key Republican in the hopes of forging a bipartisan health reform alternative that could potentially cripple plans to pass a House bill with a public option. According to GOP sources, Rep. | thehill.com | credibility unknown
+- Paul Ryan: House Republicans Might Force Donald Trump to Work With Democrats on Health Care | “If this Republican Congress allows the perfect to be the enemy of the good, I worry we’ll push the president into working with Democrats ,” he warned. Ryan said that he didn’t want to work with Democrats and House Minority Leader Nancy Pelosi on health care . | breitbart.com | credibility unknown
+- Republicans grapple with voter frustration over health care | That tension has come into sharp focus during the government shutdown as Democrats seize on rising premiums to pressure Republicans into extending ... | nbcphiladelphia.com | credibility unknown
 
 Answer only 'fake' or 'real'. Do not explain.
     

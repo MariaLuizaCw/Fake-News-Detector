@@ -1,13 +1,13 @@
 Classify the news headline as 'fake' or 'real'.
 
 Examples:
-Headline: NASA announces new water discovery on Mars
+Headline: Fossil fuel companies accused of “greenwashing” environmental commitment
 Answer: real
 
-Headline: Celebrity endorses miracle cure for cancer
+Headline: Pope Francis endorses Donald Trump for president
 Answer: fake
 
 Now classify the following headline:
-Headline: Flash floods kill five in Malaysia, army deploys to rescue thousands of displaced
+Headline: Judge proposes May 7 trial date for former Trump aide Manafort
 
 Answer only 'fake' or 'real'. Do not explain.

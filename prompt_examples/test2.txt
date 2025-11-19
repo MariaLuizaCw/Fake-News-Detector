@@ -1,31 +1,33 @@
 
 Classify the news headline as 'fake', 'real' or 'real with misinformation'.
 
-Examples (each line shows refined_title | original_title | domain | credibility):
+Examples (each line shows refined_title | snippet | domain | credibility):
 
-Headline: NASA announces new water discovery on Mars
-- NASA confirms water on Mars after new satellite analysis | NASA confirms water on Mars... | nasa.gov | credible
-- Scientists find traces of water on Mars beneath the surface | Scientists find traces of water on Mars... | science.org | credible
+Headline: Fossil fuel companies accused of “greenwashing” environmental commitment
+- Oil firms' climate claims are greenwashing, study concludes | Accusations of greenwashing against major oil companies that claim to be in transition to clean energy are well-founded, according to the most comprehensive ... | theguardian.com | credible
+- Revealed: 9 examples of fossil fuel company greenwashing | We've launched the Greenwashing Files to highlight how advertising and other public claims from companies don't always match up to reality. | clientearth.org | credibility unknown
 Answer: real
 
-Headline: Celebrity endorses miracle cure for cancer
-- Miracle cure claims debunked by doctors | Miracle cure claims debunked by doctors | healthnews.com | credible
-- Celebrity claims not verified | Celebrity claims not verified | gossipblog.com | credibility unknown
+Headline: Pope Francis endorses Donald Trump for president
+- Fake News | His comments come amid warnings of a 'fake news' crisis in online media following last month's US elections. Pope Francis Shocks World, Endorses. Donald Trump ... | theguardian.com | credibility unknown
+- Read all about it: The biggest fake news stories of 2016 | But while the Brexit vote and the U.S. election were making headlines, so too were apparently genuine stories that Pope Francis had endorsed ... | cnbc.com | credible
 Answer: fake
 
-Headline: Study proves that coffee doubles lifespan
-- Coffee linked to longer lifespan according to observational study — association is small and not causal | Coffee linked to longer lifespan according to observational study... | nytimes.com | credible
-- Experts warn study shows correlation, not causation | Experts warn study shows correlation, not causation | reuters.com | credible
+Headline: Eating chocolate can help you lose weight
+- Chocolate Helps Burn Body Fat | The morning chocolate women saw smaller waist sizes, lower stress hormones and greater fat burning. Both groups had a change in their gut ... | utmb.edu | credibility unknown
+- Chocolate 'may help keep people slim | Even though chocolate is loaded with calories, it contains ingredients that may favour weight loss rather than fat synthesis, scientists ... | bbc.com | credible
 Answer: real with misinformation
 
 Now classify the following headline:
-Headline: HYSTERICAL! President Trump Calls Out Obama: “Honestly, they didn’t know what the hell they were doing.” [Video]
+Headline:  These Panties Let You Protest Anti-Choice Republicans In The Most HILARIOUS Way (IMAGES)
 
-Results from web search (each line shows refined_title | original_title | domain | credibility):
-- Obama Gets Slammed After Calling President Trump a | Obama Gets Slammed After Calling President Trump a | trumptrainnews.com | credibility unknown
-- obama | Empire Of Truth | obama | Empire Of Truth | empireoftruth.com | credibility unknown
-- Barack Hussein Obama – Bullshit News | Barack Hussein Obama – Bullshit News | bullshitnews.org | credibility unknown
-- President Obama | decacsinc | President Obama | decacsinc | decacs-inc.com | credibility unknown
+Results from web search (each line shows refined_title | snippet | domain | credibility):
+- To Protest Gerrymandering, This N.C. Democrat Is Running as a Republican | This story is published through our partnership with NOTUS. Kate Barr, a Democrat from North Carolina, sees just one viable way to be elected to Congress: running as a Republican . Barr is challenging Republican Rep. Tim Moore for his seat in the suburbs of Charlotte... | theassemblync.com | credibility unknown
+- The Beginning of the End of the Republican Party (Democrat Party is already dead) | And in a way that speaks to much more than the ups and downs, ins and outs of US elite careers. Because the hill he is fighting on this time is resistance to the US waging another all-around devastating war in the Middle East in the service of Israel and its powerful lobby in... | stateofthenation.info | credibility unknown
+- Why Trump Made a Sudden 180 on Releasing... | The New Republic | Donald Trump now says he wants House Republicans to vote to release the files on Jeffrey Epstein. Here’s his playbook.Here’s his playbook. Donald Trump in the White House. Craig Hudson/Politico/Bloomberg/Getty Images . | newrepublic.com | credibility unknown
+- Trump's 'Big Beautiful Bill' advances, but still faces Republican dissent | Republicans were divided over how much to cut welfare programmes in order to extend $3.8tn (£2.8tn) in Trump tax breaks. The proposed cuts would strip millions of America's poorest of health insurance. Trump declared the progress a "great victory" in a late-night social media post. | bbc.com | credible source
+- I dont fuck republicans, hands off, Political Statement Women's ... - Etsy | I dont fuck republicans , hands off, Political Statement Women's Thongs, Feminist, Anti - Republican Lingerie, Protest Underwear, Panties | etsy.com | credibility unknown
+- Protest T-Shirts | Liberal & Progressive Values Shirts | Resist Swag | Use these anti - Republican and anti -GOP t-shirts & novelties to get riled up for the future of America - without Republicans . Proudly show how you feel about the Republican party and their politics with these funny, clever anti -GOP designs. Protest war, hate, and other absurd GOP policies and conservative 'values.' Resist evil power and stay strong and on the right side of history no matter the ... | leftique.com | credibility unknown
 
 Answer only one of the following: 'fake', 'true', 'real with misinformation'. Do not explain.
     

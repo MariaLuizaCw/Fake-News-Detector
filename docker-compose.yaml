@@ -6,7 +6,7 @@ services:
     container_name: postgres14-marialuiza
     restart: always
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "${VPN}:${POSTGRES_PORT}:5432"
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
