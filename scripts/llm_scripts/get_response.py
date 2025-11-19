@@ -2,15 +2,37 @@
 import os
 import sys
 import argparse
+import pandas as pd
 from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
+import urllib3
 
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # Carrega variáveis do .env
 load_dotenv()
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
+DATA_DIR = os.path.join(BASE_DIR, '..', '..', 'data')
+MODULES_DIR = os.path.join(BASE_DIR, '..', '..', 'modules')
+
+
 # Adiciona o path para importar a LLM (duas pastas acima)
-sys.path.append(os.path.abspath(os.path.join(__file__, "../../modules")))
-from llm_module import LLM  # ajuste o nome do arquivo se necessário
+sys.path.append(MODULES_DIR)
+from llm_base import LLM  # ajuste o nome do arquivo se necessário
+
+
+
+def load_shuffle_classes(data_dir):
+    """Carrega os CSVs Fake/True e retorna um dict shuffle_id -> true_class"""
+    fake_df = pd.read_csv(os.path.join(data_dir, 'Fake.csv'))
+    true_df = pd.read_csv(os.path.join(data_dir, 'True.csv'))
+    fake_df['class'] = 'fake'
+    true_df['class'] = 'real'
+    df = pd.concat([fake_df, true_df], axis=0).drop_duplicates(subset='title')
+    df_shuffled = df.sample(frac=1, random_state=42).reset_index(drop=True)
+    df_shuffled['shuffle_id'] = df_shuffled.index
+    # Mapeia shuffle_id para a classe verdadeira
+    return df_shuffled.set_index('shuffle_id')['class'].to_dict()
 
 
 def main(test_name: str, start_id: int = 0, end_id: int = None):
@@ -23,28 +45,32 @@ def main(test_name: str, start_id: int = 0, end_id: int = None):
 
     engine = create_engine(f"postgresql://{user}:{password}@{host}:{port}/{db}")
 
+    # Carrega mapeamento shuffle_id -> true_class
+    shuffle_to_class = load_shuffle_classes(DATA_DIR)
+
     # Tabela de prompts
     table_name = f"{test_name}_prompts"
     query = f"SELECT * FROM {table_name} ORDER BY shuffle_id;"
 
-    with engine.connect() as conn:
+    with engine.begin() as conn: 
         result = conn.execute(text(query))
-        prompts_data = [dict(row) for row in result]
-
+        rows = result.fetchall()  # pega todos de uma vez
+        prompts_data = [dict(row._mapping) for row in rows]
         # Filtra no Python pelo shuffle_id
         if start_id is not None:
             prompts_data = [row for row in prompts_data if row['shuffle_id'] >= start_id]
         if end_id is not None:
-            prompts_data = [row for row in prompts_data if row['shuffle_id'] <= end_id]
+            prompts_data = [row for row in prompts_data if row['shuffle_id'] < end_id]
 
-        # Cria tabela de resultados se não existir
+        # Cria tabela de resultados se não existir (agora com true_class)
         results_table = f"{test_name}_results"
         conn.execute(text(f"""
             CREATE TABLE IF NOT EXISTS {results_table} (
                 id SERIAL PRIMARY KEY,
                 search_title TEXT,
                 shuffle_id INT,
-                response TEXT
+                response TEXT,
+                true_class TEXT
             );
         """))
 
@@ -61,16 +87,26 @@ def main(test_name: str, start_id: int = 0, end_id: int = None):
             prompt = row.get('prompt')
             search_title = row.get('search_title')
             shuffle_id = row.get('shuffle_id')
+            true_class = shuffle_to_class.get(shuffle_id, None)
 
             try:
                 response = groq_llm.generate(prompt)
-                print(f"\nPrompt {idx} (shuffle_id={shuffle_id}): {prompt}")
-                print(f"Resposta: {response}")
+                print(f"\nPrompt {idx} (shuffle_id={shuffle_id}):")
+                print(f"Resposta: {response} | Classe real: {true_class}")
 
                 # Insere no banco
                 conn.execute(
-                    text(f"INSERT INTO {results_table} (search_title, shuffle_id, response) VALUES (:search_title, :shuffle_id, :response)"),
-                    {"search_title": search_title, "shuffle_id": shuffle_id, "response": response}
+                    text(f"""
+                        INSERT INTO {results_table} 
+                        (search_title, shuffle_id, response, true_class) 
+                        VALUES (:search_title, :shuffle_id, :response, :true_class)
+                    """),
+                    {
+                        "search_title": search_title,
+                        "shuffle_id": shuffle_id,
+                        "response": response,
+                        "true_class": true_class
+                    }
                 )
             except Exception as e:
                 print(f"Erro ao processar prompt {idx} (shuffle_id={shuffle_id}): {e}")

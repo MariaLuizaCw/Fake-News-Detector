@@ -1,0 +1,31 @@
+
+Classify the news headline as 'fake' or 'real'.
+
+Examples (each line shows refined_title | snippet | domain | credibility):
+
+Headline: Fossil fuel companies accused of “greenwashing” environmental commitment
+- Oil firms' climate claims are greenwashing, study concludes | Accusations of greenwashing against major oil companies that claim to be in transition to clean energy are well-founded, according to the most comprehensive ... | theguardian.com | credible
+- Revealed: 9 examples of fossil fuel company greenwashing | We've launched the Greenwashing Files to highlight how advertising and other public claims from companies don't always match up to reality. | clientearth.org | credibility unknown
+Answer: real
+
+Headline: Pope Francis endorses Donald Trump for president
+- Fake News | His comments come amid warnings of a 'fake news' crisis in online media following last month's US elections. Pope Francis Shocks World, Endorses. Donald Trump ... | theguardian.com | credibility unknown
+- Read all about it: The biggest fake news stories of 2016 | But while the Brexit vote and the U.S. election were making headlines, so too were apparently genuine stories that Pope Francis had endorsed ... | cnbc.com | credible
+Answer: fake
+
+Now classify the following headline:
+Headline: Supreme Court Justice Ginsburg 'regrets' Trump criticisms
+
+Results from web search (each line shows refined_title | snippet | domain | credibility):
+- U.S. Supreme Court Justice Ginsburg 'regrets' Trump criticisms | In a CNN interview posted on Tuesday, Ginsburg called the presumptive Republican nominee "a faker." In a separate interview with the New York ... | reuters.com | credible source
+- Ruth Bader Ginsburg: I Regret 'Ill-Advised' Criticisms of Donald Trump | 'On reflection, my recent remarks in response to press inquiries were ill-advised and I regret making them,' Ginsburg said in a statement. | nbcnews.com | credible source
+- Why Ruth Bader Ginsburg regrets her Trump comments | CNN Politics | Critics said she violated a basic tenet of judiciary impartiality and questioned whether she would have to recuse herself from any case ... | cnn.com | credible source
+- Ginsburg regrets 'ill-advised' criticism of Trump | PBS News | “On reflection, my recent remarks in response to press inquiries were ill-advised and I regret making them,” the 83-year-old justice said. | pbs.org | credible source
+- Ginsburg expresses regret for Trump comments | Constitution Center | “On reflection, my recent remarks in response to press inquiries were ill-advised and I regret making them. Judges should avoid commenting on a ... | constitutioncenter.org | credibility unknown
+- Ruth Bader Ginsburg Expresses Regret for Criticizing Donald Trump | Justice Ginsburg, who derided the presumptive Republican nominee in several interviews, said her comments were “ill-advised.” | nytimes.com | credible source
+- Ginsburg: My Trump comments were 'ill-advised' - POLITICO | “On reflection, my recent remarks in response to press inquiries were ill-advised and I regret making them,” she said in a statement. “Judges ... | politico.com | credible source
+- Supreme Court Justice Ginsburg Apologizes For Trump Comments | Ruth Bader Ginsburg has expanded on her statement apologizing for her critical comments about Donald Trump. In an interview with NPR, ... | wunc.org | credibility unknown
+- Justice Ginsburg Says She Regrets Remarks Criticizing Donald Trump | Supreme Court Justice Ruth Bader Ginsburg said Thursday she regrets her comments criticizing Donald Trump, but stopped short of apologizing for them. | theatlantic.com | credible source
+
+Answer only 'fake' or 'real'. Do not explain.
+    

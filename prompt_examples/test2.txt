@@ -19,15 +19,12 @@ Headline: Eating chocolate can help you lose weight
 Answer: real with misinformation
 
 Now classify the following headline:
-Headline:  These Panties Let You Protest Anti-Choice Republicans In The Most HILARIOUS Way (IMAGES)
+Headline:  REPORT: Trump Laughed After Woman Was Grabbed ‘By The P*ssy’ On Apprentice Set
 
 Results from web search (each line shows refined_title | snippet | domain | credibility):
-- To Protest Gerrymandering, This N.C. Democrat Is Running as a Republican | This story is published through our partnership with NOTUS. Kate Barr, a Democrat from North Carolina, sees just one viable way to be elected to Congress: running as a Republican . Barr is challenging Republican Rep. Tim Moore for his seat in the suburbs of Charlotte... | theassemblync.com | credibility unknown
-- The Beginning of the End of the Republican Party (Democrat Party is already dead) | And in a way that speaks to much more than the ups and downs, ins and outs of US elite careers. Because the hill he is fighting on this time is resistance to the US waging another all-around devastating war in the Middle East in the service of Israel and its powerful lobby in... | stateofthenation.info | credibility unknown
-- Why Trump Made a Sudden 180 on Releasing... | The New Republic | Donald Trump now says he wants House Republicans to vote to release the files on Jeffrey Epstein. Here’s his playbook.Here’s his playbook. Donald Trump in the White House. Craig Hudson/Politico/Bloomberg/Getty Images . | newrepublic.com | credibility unknown
-- Trump's 'Big Beautiful Bill' advances, but still faces Republican dissent | Republicans were divided over how much to cut welfare programmes in order to extend $3.8tn (£2.8tn) in Trump tax breaks. The proposed cuts would strip millions of America's poorest of health insurance. Trump declared the progress a "great victory" in a late-night social media post. | bbc.com | credible source
-- I dont fuck republicans, hands off, Political Statement Women's ... - Etsy | I dont fuck republicans , hands off, Political Statement Women's Thongs, Feminist, Anti - Republican Lingerie, Protest Underwear, Panties | etsy.com | credibility unknown
-- Protest T-Shirts | Liberal & Progressive Values Shirts | Resist Swag | Use these anti - Republican and anti -GOP t-shirts & novelties to get riled up for the future of America - without Republicans . Proudly show how you feel about the Republican party and their politics with these funny, clever anti -GOP designs. Protest war, hate, and other absurd GOP policies and conservative 'values.' Resist evil power and stay strong and on the right side of history no matter the ... | leftique.com | credibility unknown
+- Oct 17 - REPORT: Trump Laughed After Woman Was Grabbed ‘By ... | Oct 18, 2016 · Oscar nominee Gary Busey allegedly s3xually assaulted a female Apprentice employee during his time on the show, five Apprentice employees tell The Daily Beast. Donald Trump knew about the incident, laughed it off, and kept Busey on his TV series, these staffers said. | boxden.com | credibility unknown
+- Possibly Inspired By Trump's 'Grab Them By The P*ssy' Quote, A Republican Has Grabbed A Woman's Crotch | Jan 17, 2017 · This is what Donald Trump , set to be US President in 2 days, told a TV show host about women . He passed it off as "locker room banter", but a member of his party may have taken it as advice. | indiatimes.com | credibility unknown
+- Melania Trump 'laughed over Donald's "grab em by the p*ssy" tape' | Melania Trump is said to have burst out laughing when asked about an infamous leaked tape of her husband hours after it emerged (Pictures: AP). Melania Trump guffawed when asked about a leaked audio recording of her husband advising a pal to grab women ‘ by the pussy... | metro.co.uk | credibility unknown
 
 Answer only one of the following: 'fake', 'true', 'real with misinformation'. Do not explain.
     

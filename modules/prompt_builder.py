@@ -227,7 +227,8 @@ Answer only 'fake' or 'real'. Do not explain.
 PROMPT_REGISTRY = {
     "test1": build_classification_prompt_test1,
     "test2": build_classification_prompt_test2,
-    "test3": build_classification_prompt_test3
+    "test3": build_classification_prompt_test3,
+    'test4': build_classification_prompt_test1
 }
 
 

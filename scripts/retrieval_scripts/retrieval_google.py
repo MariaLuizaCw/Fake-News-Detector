@@ -130,34 +130,46 @@ for idx, row in sample_df.iterrows():
     ]
 
 
-    if records_to_insert:
-        try:
-            INSERT_QUERY = """
-                INSERT INTO retrieved_news_google (
-                    search_title,
-                    original_title,
-                    refined_title,
-                    snippet,
-                    link,
-                    domain,
-                    shuffle_id
+    if not records_to_insert:
+        records_to_insert = [
+            (
+                    title_1,      # string
+                    None,    # string
+                    None,              # refined_title
+                    None,              # snippet
+                    None,              # link
+                    None,              # domain
+                    shuffle_id         # int
                 )
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """
-
-            # Supondo que records_to_insert agora contenha também refined_title
-            # Cada tupla: (search_title, original_title, refined_title, snippet, link, domain, shuffle_id)
-            cur.executemany(INSERT_QUERY, records_to_insert)
-            conn.commit()
-            success_count += len(records_to_insert)
-            print(f"[INFO] Inseridos {len(records_to_insert)} registros para shuffle_id {shuffle_id}")
-        except Exception as e:
-            conn.rollback()
-            print(f"[ERRO] Falha ao inserir batch para shuffle_id {shuffle_id}: {e}")
-            failed_titles.append({'title': title_1, 'shuffle_id': shuffle_id, 'reason': f'Insert batch falhou: {e}'})
-    else:
+        ]
         print(f"[AVISO] Nenhum resultado para inserir para shuffle_id {shuffle_id}")
         failed_titles.append({'title': title_1, 'shuffle_id': shuffle_id, 'reason': 'Nenhum resultado inserido'})
+
+    try:
+        INSERT_QUERY = """
+            INSERT INTO retrieved_news_google (
+                search_title,
+                original_title,
+                refined_title,
+                snippet,
+                link,
+                domain,
+                shuffle_id
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """
+
+        # Supondo que records_to_insert agora contenha também refined_title
+        # Cada tupla: (search_title, original_title, refined_title, snippet, link, domain, shuffle_id)
+        cur.executemany(INSERT_QUERY, records_to_insert)
+        conn.commit()
+        success_count += len(records_to_insert)
+        print(f"[INFO] Inseridos {len(records_to_insert)} registros para shuffle_id {shuffle_id}")
+    except Exception as e:
+        conn.rollback()
+        print(f"[ERRO] Falha ao inserir batch para shuffle_id {shuffle_id}: {e}")
+        failed_titles.append({'title': title_1, 'shuffle_id': shuffle_id, 'reason': f'Insert batch falhou: {e}'})
+
 
 # -------------------------------
 # 10️⃣ Fechar conexão
