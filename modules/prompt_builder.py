@@ -181,7 +181,7 @@ Headline: {title_to_check}
 Results from web search (each line shows refined_title | snippet | domain | credibility):
 {filtered_text}
 
-Answer only one of the following: 'fake', 'true', 'real with misinformation'. Do not explain.
+Answer only one of the following: 'fake', 'real', 'real with misinformation'. Do not explain.
     """
     return prompt
 

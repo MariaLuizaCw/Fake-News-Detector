@@ -6,7 +6,7 @@ services:
     container_name: postgres14-marialuiza
     restart: always
     ports:
-      - "${VPN}:${POSTGRES_PORT}:5432"
+      - "${POSTGRES_PORT}:5432"
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -15,6 +15,7 @@ services:
       - .env
     volumes:
       - pgdata14:/var/lib/postgresql/data
+      - ./backup:/docker-entrypoint-initdb.d
 
 volumes:
   pgdata14:

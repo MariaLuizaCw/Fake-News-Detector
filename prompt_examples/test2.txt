@@ -26,5 +26,5 @@ Results from web search (each line shows refined_title | snippet | domain | cred
 - 2024 Election Latest: Trump accepts his GOP nomination on the | ... of his speech, Trump launched into his regular riff on Biden’s border policy and then stopped, realizing he was directing the audience’s attention ... | srnnews.com | credibility unknown
 - Clinton, Trump Have Wide Paths to Nominations | One year ago, however, some of the same savants and high rollers picked Jeb Bush to top the GOP field. ... from several key Democratic Party ... | thursdayreview.com | credibility unknown
 
-Answer only one of the following: 'fake', 'true', 'real with misinformation'. Do not explain.
+Answer only one of the following: 'fake', 'real', 'real with misinformation'. Do not explain.
     

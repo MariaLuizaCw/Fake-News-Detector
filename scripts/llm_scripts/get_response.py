@@ -52,6 +52,7 @@ def main(test_name: str, start_id: int = 0, end_id: int = None):
     table_name = f"{test_name}_prompts"
     query = f"SELECT * FROM {table_name} ORDER BY shuffle_id;"
 
+    print('Search table', table_name)
     with engine.begin() as conn: 
         result = conn.execute(text(query))
         rows = result.fetchall()  # pega todos de uma vez
@@ -74,6 +75,11 @@ def main(test_name: str, start_id: int = 0, end_id: int = None):
             );
         """))
 
+        res = conn.execute(text(f"SELECT shuffle_id FROM {results_table};"))
+        existing_ids = {row[0] for row in res.fetchall()}
+
+        prompts_data = [row for row in prompts_data if row['shuffle_id'] not in existing_ids]
+
     # Inicializa a LLM Groq
     groq_llm = LLM(
         model="llama-3.1-8b-instant",
@@ -82,7 +88,7 @@ def main(test_name: str, start_id: int = 0, end_id: int = None):
     )
 
     # Processa cada prompt e salva no banco
-    with engine.begin() as conn:  # begin() garante commit automático
+    with engine.connect() as conn:  # begin() garante commit automático
         for idx, row in enumerate(prompts_data, 1):
             prompt = row.get('prompt')
             search_title = row.get('search_title')
@@ -108,6 +114,7 @@ def main(test_name: str, start_id: int = 0, end_id: int = None):
                         "true_class": true_class
                     }
                 )
+                conn.commit() 
             except Exception as e:
                 print(f"Erro ao processar prompt {idx} (shuffle_id={shuffle_id}): {e}")
 
@@ -119,4 +126,5 @@ if __name__ == "__main__":
     parser.add_argument("--end_id", type=int, default=None, help="ID final do shuffle para processar")
     args = parser.parse_args()
 
+    print('Executing test name', args.test_name)
     main(args.test_name, args.start_id, args.end_id)
