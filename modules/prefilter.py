@@ -1,6 +1,7 @@
 from typing import List, Dict
 from sklearn.metrics.pairwise import cosine_similarity
 from help import load_credible_domains  # se você também modularizar o carregamento de domínios
+from transformers import pipeline
 
 def prefilter_results(
     results: List[Dict],
@@ -31,27 +32,12 @@ def prefilter_results(
     
     sim_scores = cosine_similarity(original_emb, embeddings)[0]
 
-    # --- THRESHOLDS ---
-    thresholds = [0.85, 0.80, 0.70]
     filtered_results = []
 
-    for th in thresholds:
-        filtered_results = []
-        for i, score in enumerate(sim_scores):
-            if score >= th:
-                r = valid_items[i].copy()
-                r["similarity"] = float(score)
-                r["credible"] = r["domain"] in credible_domains
-                filtered_results.append(r)
-        if filtered_results:
-            break
-
-    # Se nada passou no threshold, retorna todos com similarity
-    if not filtered_results:
-        for i, score in enumerate(sim_scores):
-            r = valid_items[i].copy()
-            r["similarity"] = float(score)
-            r["credible"] = r["domain"] in credible_domains
-            filtered_results.append(r)
-
+    for i, score in enumerate(sim_scores):
+        r = valid_items[i].copy()
+        r["similarity"] = float(score)
+        r["credible"] = r["domain"] in credible_domains
+        filtered_results.append(r)
+    
     return filtered_results

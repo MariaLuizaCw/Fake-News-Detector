@@ -39,7 +39,7 @@ def main(test_name: str, start_id: int = 0, end_id: int = None):
     # Conexão com o banco usando SQLAlchemy
     user = os.getenv("POSTGRES_USER")
     password = os.getenv("POSTGRES_PASSWORD")
-    host = os.getenv("POSTGRES_HOST")
+    host = os.getenv("POSTGRES_HOST", "localhost")
     port = os.getenv("POSTGRES_PORT")
     db = os.getenv("POSTGRES_DB")
 
