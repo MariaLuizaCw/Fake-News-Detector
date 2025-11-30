@@ -224,14 +224,35 @@ Answer only 'fake' or 'real'. Do not explain.
     return prompt
 
 
+def build_classification_prompt_test5(title_to_check: str, results_filtered: list) -> str:
+    prompt = f"""
+You are a tone-based news classifier.
+Classify the following news text as “fake” or “real” based only on tone, style, emotional charge, and linguistic cues.
 
+Important rules:
+
+Do NOT check factual accuracy.
+
+Do NOT use external knowledge.
+
+Do NOT verify if the information is true in reality.
+
+Judge ONLY the tone and writing style.
+
+Your entire output must be only one word: “fake” or “real”, with no explanation.
+
+Text:
+{title_to_check}
+"""
+    return prompt
 
 
 PROMPT_REGISTRY = {
     "test1": build_classification_prompt_test1,
     "test2": build_classification_prompt_test2,
     "test3": build_classification_prompt_test3,
-    'test4': build_classification_prompt_test1
+    'test4': build_classification_prompt_test1,
+    'test5': build_classification_prompt_test5
 }
 
 
